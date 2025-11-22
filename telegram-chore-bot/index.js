@@ -287,7 +287,7 @@ reminderSchedule.forEach(({ cron: cronExpr, label }) => {
   }, { timezone: TIME_ZONE });
 });
 
-cron.schedule('22 14 * * *', () => {
+cron.schedule('59 23 * * *', () => {
   applyDailyPunishments();
 }, { timezone: TIME_ZONE });
 // Adds the chat to the reminder set if the metadata is available.
