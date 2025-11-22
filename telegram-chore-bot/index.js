@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Entry point for the Telegram chore bot.
  * The bot keeps a simple in-memory schedule, pushes reminders on a cron
  * schedule, and lets users report completions via natural language text.
@@ -54,6 +54,7 @@ const helpMessage = [
   '✅ Send "<person> completed <chore>" to update progress',
   '',
   'Commands:',
+  '🔹 /start - Fire up the bot',
   '🔹 /today - show today\'s assignments',
   '🔹 /weeklyschedule - view the weekly rotation',
   '🔹 /ping - check if I am alive',
@@ -61,7 +62,7 @@ const helpMessage = [
 
 // Telegram custom keyboard for quick access to the supported commands.
 const commandKeyboard = Markup.keyboard([
-  ['/today', '/weeklyschedule'],
+  ['/start', '/today', '/weeklyschedule'],
   ['/ping']
 ]).resize();
 
@@ -119,7 +120,7 @@ const formatDailySummary = () => {
 
   if (!state.length) {
     // Some calendar days purposely have no chores so return a friendly message.
-    return `${heading}:\n• No chores scheduled. Enjoy the day! 🎉`;
+    return `${heading}:\n \n• No chores scheduled. Enjoy the day! 🎉`;
   }
 
   const lines = state.map((entry) => {
@@ -202,6 +203,8 @@ const sendReminder = (label) => {
 // Three daily cron entries; easy to extend if the schedule ever changes.
 const reminderSchedule = [
   { cron: '0 8 * * *', label: '8:00 AM' },
+  { cron: '15 13 * * *', label: '1:15 PM' },
+  { cron: '22 13 * * *', label: '1:22 PM' },
   { cron: '0 18 * * *', label: '6:00 PM' },
   { cron: '0 23 * * *', label: '11:00 PM' },
 ];
@@ -229,7 +232,7 @@ bot.start((ctx) => {
   const name = (ctx.from && ctx.from.first_name) || 'there';
   const summary = formatDailySummary();
   ctx.reply(
-    `🙌 Hi ${name}! I'm your daily chore assistant.\n${helpMessage}\n\n${summary}`,
+    `🙌 Hi Everyone! I'm your daily chore assistant.\n${helpMessage}\n\n${summary}`,
     commandKeyboard,
   );
 });
